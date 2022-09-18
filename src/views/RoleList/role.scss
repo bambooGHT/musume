@@ -1,0 +1,27 @@
+.type {
+  width: calc(100% - 4rem);
+  height: 3rem;
+  margin: 1rem auto;
+  font: clamp(1.7rem, 1.7vw, 2.2rem)/4rem "Orbitron", sans-serif;
+}
+
+%role {
+  box-shadow: 0 0 1rem 0.2rem rgba($color: #000000, $alpha: 0.5);
+  border: 3px solid $ThemeC2;
+  display: grid;
+  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fill, clamp(11rem, 6.7vw, 14rem));
+  justify-content: space-around;
+  padding: 0.3rem 0;
+  gap: 0.5rem 0;
+  width: calc(100% - 4rem);
+  margin: 0 auto;
+}
+
+@media screen and (max-width:777px) {
+
+  .type,
+  .role {
+    width: calc(100% - 2rem);
+  }
+}

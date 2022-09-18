@@ -1,0 +1,28 @@
+.info-name {
+  border: 2px solid $ThemeC3;
+  box-sizing: border-box;
+  padding-bottom: 0.5rem;
+  overscroll-behavior-y: contain;
+  @extend %scroll;
+
+  li:nth-child(1) {
+    background-color: $ThemeC3;
+    border-bottom: 2px solid $ThemeC3;
+    font-size: clamp(1.5rem, 1.2vw, 1.8rem);
+  }
+}
+
+.info-atter {
+  display: flex;
+  @extend %size;
+
+  &:hover {
+    background-color: rgba(36, 235, 168, 0.7);
+  }
+
+  div {
+    height: 3rem;
+    line-height: 3rem;
+    width: 50%;
+  }
+}

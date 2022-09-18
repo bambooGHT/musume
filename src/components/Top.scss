@@ -1,0 +1,169 @@
+.top {
+  @include WH(100%, 6rem);
+  background-color: $ThemeC1;
+  padding-top: 0.7rem;
+  box-sizing: border-box;
+  position: sticky;
+  transition: height 0.3s;
+  top: 0;
+  z-index: 10;
+  user-select: none;
+
+  .expand {
+    flex-direction: column;
+    @include WH(2rem, 1.5rem);
+    justify-content: space-between;
+    margin-left: 0.5rem;
+    position: relative;
+    z-index: 999;
+    display: none;
+
+    span {
+      display: inline-block;
+      @include WH(100%, 1px);
+      background-color: #000;
+      transform-origin: 0 0;
+      transition: 0.3s;
+    }
+  }
+
+  .nav {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    position: relative;
+    z-index: 11;
+
+    @media screen and (min-width:778px) {
+      height: 100%;
+      align-items: flex-end;
+      padding-bottom: 0.5rem;
+      box-sizing: border-box;
+
+      div::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 100%;
+        @include WH(0, 100%);
+        border-bottom: 2px solid #000;
+        transition: 0.2s all linear;
+      }
+
+      div:hover::before {
+        width: 80%;
+        top: 0;
+        left: 10%;
+        transition-delay: 0.1s;
+        border-bottom-color: #000;
+      }
+
+      div:hover~div::before {
+        left: 0;
+      }
+    }
+
+    div {
+      padding: 0 1.5rem;
+      position: relative;
+      @extend %cur1
+    }
+  }
+
+  .lang,
+  .nav {
+    font-size: clamp(1.8rem, 1.4vw, 2.3rem);
+  }
+
+  .lang {
+    position: absolute;
+    display: flex;
+    right: 1rem;
+
+    &:nth-child(6) {
+      display: none;
+    }
+
+    div {
+      margin: 0 1rem;
+      @extend %cur1
+    }
+  }
+
+  .mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  .expand1 {
+    span {
+      &:nth-child(1) {
+        transform: rotateZ(45deg);
+      }
+
+      &:nth-child(2) {
+        opacity: 0;
+      }
+
+      &:nth-child(3) {
+        transform: rotateZ(-45deg);
+      }
+    }
+  }
+
+  .nav1 {
+    opacity: 1;
+    width: 25rem !important;
+    box-shadow: 0 0 100rem 999rem rgba(0, 0, 0, 0.3);
+  }
+}
+
+
+
+@media screen and (max-width:777px) {
+  .top {
+    height: 3rem;
+
+    .lang1 {
+      display: none;
+    }
+
+    .lang {
+      width: 100%;
+      bottom: 1rem;
+      right: 0;
+      left: 0;
+      justify-content: center;
+
+      &:nth-child(6) {
+        display: flex;
+      }
+    }
+
+    .expand {
+      display: flex;
+    }
+
+    .nav {
+      flex-direction: column;
+      width: 0;
+      margin: 0 0;
+      background-color: #fff;
+      position: absolute;
+      top: 0;
+      height: 20rem;
+      padding: 3rem 0 6rem;
+      text-align: center;
+      transition: 0.3s;
+      overflow: hidden;
+      &>div {
+        margin-top: 1.5rem;
+      }
+    }
+  }
+
+}

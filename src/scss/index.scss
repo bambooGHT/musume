@@ -1,0 +1,46 @@
+$ThemeC1: var(--ThemeC1);
+$ThemeC2: var(--ThemeC2);
+$ThemeC3: var(--ThemeC3);
+$ThemeC4: var(--ThemeC4);
+$ThemeC5: var(--ThemeC5);
+$ThemeC6: var(--ThemeC6);
+$ThemeC7: var(--ThemeC7);
+$ThemeC8: var(--ThemeC8);
+$ThemeC9: var(--ThemeC9);
+$ThemeC10: var(--ThemeC10);
+$ThemeC11: var(--ThemeC11);
+$ThemeC12: var(--ThemeC12);
+$ThemeC22: var(--ThemeC22);
+
+@mixin WH($w, $h: 100%) {
+  width: $w;
+  height: $h;
+}
+
+%size {
+  font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+}
+
+%cur {
+  cursor: default;
+}
+
+%cur1 {
+  cursor: pointer;
+}
+
+%scroll {
+  &::-webkit-scrollbar-track {
+    border-radius: 2rem;
+    background-color: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2rem;
+    background-color: rgba(160, 160, 160, 0.514);
+  }
+
+  &::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+}
