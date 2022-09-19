@@ -104,10 +104,9 @@ onMounted(async () => {
   if (Role.voice?.id !== id) {
     const data = await voices(id);
     Role.voice = data.data;
-    if (data.data?.main) Role.mian = Object.keys(data.data.main)[0];
+    data.data?.main && (Role.mian = Object.keys(data.data.main)[0]);
   }
   spine2d.voicelist = Role.voice.voice;
-
 });
 
 onUnmounted(() => {

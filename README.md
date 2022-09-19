@@ -1,6 +1,19 @@
 # Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+```
+  "axios": "^0.27.2",
+  "pinia": "^2.0.21",
+  "pixi-spine": "^3.1.0",
+  "pixi.js": "^6.5.3",
+  "vue": "^3.2.39",
+  "vue-router": "^4.1.5",
+  "@vitejs/plugin-vue": "^3.0.3",
+  "sass": "^1.54.5",
+  "typescript": "^4.6.4",
+  "vite": "^3.1.1",
+  "vue-tsc": "^0.39.5"
+  
+```
 
 ## Recommended IDE Setup
 

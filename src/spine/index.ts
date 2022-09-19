@@ -182,8 +182,8 @@ class Spine2d extends background {
     spine.interactive = true;
     spine.cursor = 'pointer';
     spine.position.set(app.renderer.width / 2, app.renderer.height / 2);
-    if (size === 1) spine.scale.set(app.renderer.width / 1350);
-    else spine.scale.set(size / spine.width);
+    size === 1 ? spine.scale.set(app.renderer.width / 1350) :
+      spine.scale.set(size / spine.width);
     //動畫
     this.animation.value = spine.skeleton.data.animations;
     //插槽
@@ -243,10 +243,9 @@ class Spine2d extends background {
       };
       this.#keylist.slice(4).forEach(p => key[p] = false);
       const value = this.#keylist.slice(0, 4).some(p => key[p] === true);
-      if (value) {
-        spine.state.setAnimation(0, 'walk', true);
-        spine.state.timeScale = this.debugcg.timeScale;
-      } else spine.state.setAnimation(0, 'wait', true);
+      value ? (spine.state.setAnimation(0, 'walk', true),
+        spine.state.timeScale = this.debugcg.timeScale) :
+        spine.state.setAnimation(0, 'wait', true);
       this.#isanima = '';
       this.complete = false;
       spine.state.removeListener(this.#completes);
@@ -301,7 +300,7 @@ class Spine2d extends background {
     const value = this.#keylist.slice(0, 4).some(p => key[p] === true);
     if (!value) {
       this.keydowns = false;
-      if (!this.complete) spine.state.setAnimation(0, 'wait', this.debugcg.repeat);
+      !this.complete && spine.state.setAnimation(0, 'wait', this.debugcg.repeat);
       spine.state.timeScale = 1;
       this.#Ticker.remove(this.loop, this);
     }
@@ -312,16 +311,12 @@ class Spine2d extends background {
     const { xy } = this.debugcg;
     if (this.#keylist.slice(4).some(p => key[p] === true)) return;
     if (key['ArrowLeft']) {
-      if (spine.scale.x > 0) {
-        spine.scale.x = -spine.scale.x;
-      }
+      spine.scale.x > 0 && (spine.scale.x = -spine.scale.x);
       spine.x -= xy;
     };
     if (key['ArrowUp']) spine.y -= xy;
     if (key['ArrowRight']) {
-      if (spine.scale.x < 0) {
-        spine.scale.x = Math.abs(spine.scale.x);
-      }
+      spine.scale.x < 0 && (spine.scale.x = Math.abs(spine.scale.x));
       spine.x += xy;
     };
     if (key['ArrowDown']) spine.y += xy;
@@ -368,12 +363,14 @@ class Spine2d extends background {
   voicelist: list[] = [];
   isaudio = ref(false);
   playbacksize = ref('0%');
-  currentTime = ref('0');
-  durationtime = ref('0');
+  currentTime = ref('00:00');
+  durationtime = ref('00:00');
   voicename = ref('');
   timeset = 0;
   //播放
   play(data: list) {
+    this.currentTime.value = '00:00';
+    this.durationtime.value = '00:00';
     this.voicename.value = data.name;
     this.isaudio && (this.#Ticker.remove(this.#playtime, this), clearTimeout(this.timeset));
     audio.src = data.UrlWav;
@@ -393,7 +390,8 @@ class Spine2d extends background {
     }, 200);
   }
   #playtime() {
-    this.playbacksize.value = audio.currentTime / audio.duration * 100 + '%';
+    window.isNaN(audio.duration) ? this.playbacksize.value = '0%' :
+      this.playbacksize.value = audio.currentTime / audio.duration * 100 + '%';
     if (audio.currentTime === audio.duration) {
       this.#Ticker.remove(this.#playtime, this);
       this.isaudio.value = false;
@@ -472,9 +470,7 @@ class Spine2d extends background {
     if (Loading.value !== 100 && spine.alpha === 0) return;
     // this.spine.alpha += 0.08 * delta;
     spine.alpha += 0.03;
-    if (spine.alpha > 1) {
-      this.#Ticker.remove(this.#add, this);
-    };
+    spine.alpha > 1 && this.#Ticker.remove(this.#add, this);
   }
   //移除&添加
   remove_add(boo?: boolean) {

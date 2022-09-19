@@ -8,20 +8,28 @@
           <span>"{{key}}"</span>
           <span>"{{p}}"</span>
         </li>
+        <li></li>
         <li>github
-          <a href="" target="_blank"></a>
+          <a href="https://github.com/bambooGHT/musume/tree/musume-tag" target="_blank">musume-tag</a>
         </li>
       </ul>
       <ul>
-        <li>node</li>
+        <li>express</li>
         <li v-for="(p,key) of arr1">
           <span>"{{key}}"</span>
           <span>"{{p}}"</span>
         </li>
+        <li></li>
         <li>github
-          <a href="" target="_blank"></a>
+          <a href="" target="_blank">musume-api</a>
         </li>
       </ul>
+    </div>
+    <div class="infos-a">代碼寫的很爛,目前還有bug</div>
+    <div class="infos-a">能力有限,如果有會逆向的巨巨能幫忙,我可以重寫</div>
+    <div class="infos-a">聯係:
+      <a href="mailto:2942402900@qq.com">2942402900@qq.com</a> ||
+      <a href="mailto:bamboo-get@outlook.com">bamboo-get@outlook.com</a>
     </div>
   </div>
 </template>
@@ -51,10 +59,10 @@ const arr1 = {
 
 <style lang="scss" scoped>
 .infos {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   text-align: center;
-  font-size: clamp(1.6rem, 1.2vw, 2.2rem);
+  font-size: clamp(1.6rem, 1.4vw, 2.2rem);
   box-sizing: border-box;
 
   &-box {
@@ -80,6 +88,42 @@ const arr1 = {
           &:nth-child(2) {
             background-color: $ThemeC7;
           }
+        }
+
+        a {
+          color: rgb(0, 0, 238);
+        }
+      }
+    }
+
+    @media screen and (max-width:1050px) {
+      flex-direction: column;
+
+      ul {
+        width: calc(100% - 1rem);
+
+        li {
+          width: 80%;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    @media screen and (max-width:666px) {
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        li:nth-child(n+2) {
+          width: 50%;
+
+          span {
+            width: 100%;
+          }
+        }
+
+        li:nth-last-child(1) {
+          width: 100%;
         }
       }
     }
