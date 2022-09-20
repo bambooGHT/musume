@@ -37,7 +37,7 @@ class app {
   //PIXI實例
   readonly app: apptype = new Application({
     width: 2700,
-    height: 2300,
+    height: 2350,
   });
   readonly meta = { metadata: { imageMetadata: { alphaMode: ALPHA_MODES.PMA } } };
   //緩存進度
@@ -126,13 +126,19 @@ class background extends app {
       png.width = png.width * 4;
       png.position.set(-(png.width - app.renderer.width) / 2, 0);
       png.filters = [blur];
-      png.height = png.height * 4;
+      png.height = png.height * 4.1;
       app.stage.addChildAt(png, 0);
       this.withbg = true;
     }
   }
   //移除背景
-  removebg() { this.withbg && (this.withbg = false, this.app.stage.removeChildAt(0)); }
+  removebg() {
+    this.withbg && (this.withbg = false, this.app.stage.removeChildAt(0)).destroy({
+      children: true,
+      texture: false,
+      baseTexture: false,
+    });
+  }
 }
 class Spine2d extends background {
   debugcg = reactive({
@@ -178,7 +184,6 @@ class Spine2d extends background {
     const { app, errors, debugcg } = this;
     this.errors.value = false;
     if (Object.keys(this.spine).length) {
-      console.log(111);
       this.anima(true);
       this.move(true);
     }
@@ -474,11 +479,15 @@ class Spine2d extends background {
   #removes(delta: number) {
     const { app, Loading } = this;
     const stagespine = app.stage.children[1] ?? app.stage.children[0];
-    // stagespine.alpha -= 0.08 * delta;
+    stagespine.alpha -= 0.08 * delta;
     if (Loading.value !== 100 && stagespine.alpha >= 1) return;
-    stagespine.alpha -= 0.03;
+    // stagespine.alpha -= 0.03;
     if (stagespine.alpha < 0) {
-      app.stage.removeChild(stagespine);
+      app.stage.removeChild(stagespine).destroy({
+        children: true,
+        texture: false,
+        baseTexture: false,
+      });
       this.spine.alpha = 0;
       app.stage.addChild(this.spine);
       this.#Ticker.add(this.#add, this);
@@ -489,15 +498,19 @@ class Spine2d extends background {
   #add(delta: number) {
     const { Loading, spine } = this;
     if (Loading.value !== 100 && spine.alpha === 0) return;
-    // this.spine.alpha += 0.08 * delta;
-    spine.alpha += 0.03;
+    this.spine.alpha += 0.08 * delta;
+    // spine.alpha += 0.03;
     spine.alpha > 1 && this.#Ticker.remove(this.#add, this);
   }
   //移除&添加
   remove_add(boo?: boolean) {
     const { spine, app, withbg } = this;
     if (boo) {
-      app.stage.removeChild(spine);
+      app.stage.removeChild(spine).destroy({
+        children: true,
+        texture: false,
+        baseTexture: false,
+      });
       return;
     }
     if ((withbg && app.stage.children.length < 2) || app.stage.children.length === 0) {

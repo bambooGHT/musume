@@ -79,7 +79,7 @@ const PIXIBOX = ref();
 const size = new ResizeObserver(entries => {
   value = entries[0].contentRect.width / 2700;
   PIXIBOX.value && (PIXIBOX.value.style.transform = `scale(${value})`);
-  Rolebox.style.height = `${value * 2300}px`;
+  Rolebox.style.height = `${value * 2350}px`;
 });
 
 
@@ -101,7 +101,7 @@ onMounted(async () => {
   size.observe(PIXIBOX.value);
   //語音
   const id = +String(route.params.id).replace('ch_', '');
-  if (Role.voice?.id !== id) {
+  if (Role.voice?.id != id) {
     const data = await voices(id);
     Role.voice = data.data;
     data.data?.main && (Role.mian = Object.keys(data.data.main)[0]);
@@ -150,6 +150,7 @@ onUnmounted(() => {
   position: relative;
   @include WH(70%);
   min-height: 33rem;
+
   .load {
     position: absolute;
     top: 4rem;

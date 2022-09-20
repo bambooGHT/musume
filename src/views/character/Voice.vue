@@ -156,8 +156,7 @@ const { voice } = storeToRefs(Role);
     height: auto;
 
     div {
-      width: 20%;
-      @include WH(20%, 3.2rem);
+      @include WH(40%, 3.2rem);
       line-height: 3.2rem;
     }
   }
