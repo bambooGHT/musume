@@ -21,7 +21,7 @@
         </li>
         <li></li>
         <li>github
-          <a href="" target="_blank">musume-api</a>
+          <a href="https://github.com/bambooGHT/musume/tree/musume-api" target="_blank">musume-api</a>
         </li>
       </ul>
     </div>
@@ -51,6 +51,7 @@ const arr = {
 const arr1 = {
   "@types/node": "^18.7.13",
   "express": "^4.18.1",
+  "jimp": "^0.16.2",
   "ts-node": "^10.9.1",
   "typescript": "^4.8.2",
   "@types/express": "^4.17.13"
