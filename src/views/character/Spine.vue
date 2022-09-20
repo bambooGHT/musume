@@ -149,7 +149,7 @@ onUnmounted(() => {
 .PIXIbox {
   position: relative;
   @include WH(70%);
-
+  min-height: 33rem;
   .load {
     position: absolute;
     top: 4rem;

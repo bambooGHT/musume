@@ -177,6 +177,11 @@ class Spine2d extends background {
   async newspine(id: string, size: number) {
     const { app, errors, debugcg } = this;
     this.errors.value = false;
+    if (Object.keys(this.spine).length) {
+      console.log(111);
+      this.anima(true);
+      this.move(true);
+    }
     const res = await this.loadTexture(id);
     const spine = new Spine(res.spineData!);
     spine.interactive = true;
@@ -321,20 +326,28 @@ class Spine2d extends background {
     };
     if (key['ArrowDown']) spine.y += xy;
   }
+  animafn1() {
+    throttle(async () => {
+      if (this.debugcg.isckickvoice && this.voicelist.length > 1) {
+        const voiceurl = await this.#list1();
+        this.play(voiceurl);
+      }
+      if (this.animation.value.length > 1 && this.debugcg.isanimas) {
+        const animationName = await this.#list();
+        this.spine.state.setAnimation(0, animationName, this.debugcg.repeat);
+      }
+    }, 500);
+  }
+  animafn = this.animafn1.bind(this);
   //動畫
-  anima() {
-    this.spine.on('click', () => {
-      throttle(async () => {
-        if (this.debugcg.isckickvoice && this.voicelist.length > 1) {
-          const voiceurl = await this.#list1();
-          this.play(voiceurl);
-        }
-        if (this.animation.value.length > 1 && this.debugcg.isanimas) {
-          const animationName = await this.#list();
-          this.spine.state.setAnimation(0, animationName, this.debugcg.repeat);
-        }
-      }, 500);
-    });
+  anima(boo?: boolean) {
+    if (boo) {
+      this.spine.off('click', this.animafn.bind(this));
+      this.spine.off('touchend', this.animafn.bind(this));
+      return;
+    }
+    this.spine.on('click', this.animafn.bind(this));
+    this.spine.on('touchend', this.animafn.bind(this));
   }
   //animation随机去重
   #list(): Promise<string> {
@@ -425,29 +438,37 @@ class Spine2d extends background {
       resolve(voice[voice.length - 1]);
     });
   }
+  movefn2(e: any) {
+    const { spine } = this;
+    const X = e.data.global.x - spine.x;
+    const Y = e.data.global.y - spine.y;
+    const fn = () => {
+      spine.x = e.data.global.x - X;
+      spine.y = e.data.global.y - Y;
+      spine.x > 2700 && (spine.x = 2700);
+      spine.x < 0 && (spine.x = 0);
+      spine.y > 2100 && (spine.y = 2100);
+      spine.y < 0 && (spine.y = 0);
+    };
+    document.onmousemove = fn;
+    document.ontouchmove = fn;
+    document.onmouseup = () => {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+    document.ontouchend = () => {
+      document.ontouchmove = null;
+      document.ontouchend = null;
+    };
+  }
+  movefn = this.movefn2.bind(this);
   //移動
   move(boo: boolean) {
     if (!boo) {
-      this.spine.off('pointerdown');
+      this.spine.off('pointerdown', this.movefn);
       return;
     }
-    const { spine } = this;
-    this.spine.on('pointerdown', (e: any) => {
-      const X = e.data.global.x - spine.x;
-      const Y = e.data.global.y - spine.y;
-      document.onmousemove = () => {
-        spine.x = e.data.global.x - X;
-        spine.y = e.data.global.y - Y;
-        spine.x > 2700 && (spine.x = 2700);
-        spine.x < 0 && (spine.x = 0);
-        spine.y > 2100 && (spine.y = 2100);
-        spine.y < 0 && (spine.y = 0);
-      };
-      document.onmouseup = () => {
-        document.onmousemove = null;
-        document.onmouseup = null;
-      };
-    });
+    this.spine.on('pointerdown', this.movefn);
   }
   //加載過渡
   #removes(delta: number) {
