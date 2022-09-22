@@ -14,8 +14,7 @@
     </li>
     <li>
       <div>
-        <input type="number" name="debug" v-model="spine2d.blur.blur"
-          step="2">
+        <input type="number" name="debug" v-model="spine2d.blur.blur" step="2">
         <span>bg-blur</span>
       </div>
     </li>
@@ -106,15 +105,15 @@ const scale = () => {
 watch(() => spine2d.debugcg.drawDebug, (newvalue) => {
   if (!newvalue.drawDebug) {
     for (let key in newvalue) {
-      key !== 'drawDebug' && ((spine2d as any).spine[key] = false);
+      key !== 'drawDebug' && (spine2d.spine[key] = false);
     }
     setTimeout(() => {
-      (spine2d as any).spine['drawDebug'] = false;
+      spine2d.spine['drawDebug'] = false;
     }, 10);
     return;
   }
   for (let key in newvalue) {
-    (spine2d as any).spine[key] = (newvalue as any)[key];
+    spine2d.spine[key] = newvalue[key];
   }
 }, {
   deep: true,
