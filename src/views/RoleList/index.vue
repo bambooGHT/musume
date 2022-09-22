@@ -9,8 +9,7 @@ import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import list from './list.vue';
 import list1 from './list1.vue';
-import {scroll} from '@/hooks/scroll';
-scroll();
+import { scroll } from '@/hooks/scroll';
 const Role = role();
 const route = useRoute();
 type types = 'musume' | 'enemy' | 'BeastGod';
@@ -22,5 +21,6 @@ onMounted(async () => {
     Role.rolelist[id] = result.data.role;
     Role.rolelistde[id] = result.data.roles;
   }
+  scroll();
 });
 </script>

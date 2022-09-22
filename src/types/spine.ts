@@ -48,6 +48,7 @@ export type drawdebug = {
   drawMeshTriangles: boolean,
   drawPaths: boolean;
   // drawBoundingBoxes: boolean,
+  [key: string]: boolean;
 };
 export interface DEBUG {
   background: bg;
