@@ -24,10 +24,8 @@
         <div class="main">
           <span v-for="(s,key) of voice.main" :class="{'back':Role.mian===key}" @click="Role.mian=key">{{key}}</span>
         </div>
-        <div class="main1">
-          <div class="lists" v-for="p of voice.main[Role.mian]" @click="spine2d.play(p)" :title="p.name" :key="p.name">
-            {{p.name}}
-          </div>
+        <div class="lists" v-for="p of voice.main[Role.mian]" @click="spine2d.play(p)" :title="p.name" :key="p.name">
+          {{p.name}}
         </div>
       </li>
     </template>
@@ -94,6 +92,8 @@ const { voice } = storeToRefs(Role);
   box-sizing: border-box;
   @extend %size;
   background-color: $ThemeC3;
+  position: sticky;
+  top: 0;
 }
 
 .info-voice {
@@ -114,7 +114,7 @@ const { voice } = storeToRefs(Role);
     @extend %cur1;
     border: 1px solid $ThemeC3;
 
-    &:not(.main, .main1):hover {
+    &:not(.main):hover {
       background-color: $ThemeC1;
     }
   }
@@ -144,12 +144,6 @@ const { voice } = storeToRefs(Role);
     .back {
       background-color: $ThemeC3;
     }
-  }
-
-  .main1 {
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
   }
 
   @media screen and (max-width:777px) {
