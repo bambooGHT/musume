@@ -207,7 +207,7 @@ const rolelist = async (path: string) => {
     await access(`${rolepath}/${role}`).catch(() => role_1 = '');
     roledeinfo.push({
       id,
-      name1,
+      name: name1,
       Weapons: 'Weapons',
       pngurl: ''
     });
