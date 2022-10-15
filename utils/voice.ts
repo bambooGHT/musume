@@ -96,7 +96,8 @@ const voicename = [
 
 const voice = async (path: string) => {
   let list = await readdir(path);
-  const newpath = `http://localhost:3002/`;
+  // const newpath = `http://localhost:3002/`;
+  const newpath = `http://43.138.26.158:3002/`;
   const voicejson = new Map();
   const data = async (name: string) => {
     const id = +name.slice(3);
@@ -137,6 +138,6 @@ const voice = async (path: string) => {
     });
   };
   await Promise.all(list.map((p: string) => data(p)));
-  await writeFile('voice.json', JSON.stringify([...voicejson.entries()]));
+  await writeFile('voice.json', JSON.stringify([...voicejson.entries()].sort((p, s) => p[0] - s[0])));
 };
 voice('data/voice');

@@ -134,7 +134,8 @@ const rolelist = async (path: string) => {
   const roleinfo: Array<any> = [];
   const rolejson = new Map();
 
-  const newpath = `http://localhost:3002/`;
+  // const newpath = `http://localhost:3002/`;
+  const newpath = `http://43.138.26.158:3002/`;
   const rolepath = 'data/role';
 
   const role = async (name: string) => {
@@ -219,7 +220,7 @@ const rolelist = async (path: string) => {
   await Promise.all(newlist.map((p: string) => role1(p)));
 
   await writeFile('roleinfo.json', JSON.stringify(roleinfo));
-  await writeFile('rolejson.json', JSON.stringify([...rolejson.entries()]));
+  await writeFile('rolejson.json', JSON.stringify([...rolejson.entries()].sort((p, s) => p[0] - s[0])));
   await writeFile('rolede.json', JSON.stringify(roledeinfo));
 
 };
