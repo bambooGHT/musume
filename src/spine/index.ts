@@ -177,7 +177,7 @@ class Spine2d extends background {
   animation = ref<animatype[]>([]);
   animalist: string[] = [];
   // spine = {} as spinetype;
-  spine = {} as spinetype&keys;
+  spine = {} as spinetype & keys;
   slot = ref<any>([]);
   //spine
   async newspine(id: string, size: number) {
@@ -188,7 +188,7 @@ class Spine2d extends background {
       this.move(true);
     }
     const res = await this.loadTexture(id);
-    const spine:any = new Spine(res.spineData!);
+    const spine: any = new Spine(res.spineData!);
     spine.interactive = true;
     spine.cursor = 'pointer';
     spine.position.set(app.renderer.width / 2, app.renderer.height / 2);
@@ -206,10 +206,7 @@ class Spine2d extends background {
     this.remove_add();
     this.anima();
     this.move(debugcg.move);
-    if (!debugcg.drawDebug.drawDebug) return;
-    for (const key in debugcg.drawDebug) {
-      spine[key] = debugcg.drawDebug[key];
-    }
+    debugcg.drawDebug.drawDebug && Object.assign(spine, debugcg.drawDebug);
   }
   //鍵盤切换默认动画
   private keydowns = false;

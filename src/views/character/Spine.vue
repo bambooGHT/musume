@@ -81,10 +81,8 @@ const size = new ResizeObserver(entries => {
   PIXIBOX.value && (PIXIBOX.value.style.transform = `scale(${value})`);
   Rolebox.style.height = `${value * 2350}px`;
 });
-
-
-
 onMounted(async () => {
+  document.documentElement.scrollTop = 0;
   //背景
   await spine2d.loadbackground(spine2d.debugcg.background);
   Rolebox = document.querySelector('.roleinfo');
@@ -100,13 +98,15 @@ onMounted(async () => {
   //监听元素
   size.observe(PIXIBOX.value);
   //語音
-  const id = +String(route.params.id).replace('ch_', '');
-  if (Role.voice?.id != id) {
+  const id = +String(route.params.id);
+  const is = Role.voice.has(id);
+  if (!is) {
     const data = await voices(id);
-    Role.voice = data.data;
+    Role.voice.set(id, data.data);
     data.data?.main && (Role.mian = Object.keys(data.data.main)[0]);
   }
-  spine2d.voicelist = Role.voice.voice;
+  Role.isvoice = true;
+  spine2d.voicelist = Role.voice.get(id).voice;
 });
 
 onUnmounted(() => {
@@ -116,6 +116,7 @@ onUnmounted(() => {
   spine2d.remove_add(true);
   spine2d.keyboard(true);
   Role.currentspine = -1;
+  Role.isvoice = false;
 });
 </script>
 

@@ -13,22 +13,25 @@
         <span>animation repeat</span>
       </label>
     </li>
-    <div class="name">Voice</div>
-    <li class="info-voice">
-      <div v-for="p in voice.voice" @click="spine2d.play(p)" :title="p.name">{{ p.name }}</div>
-      <div v-if="voice.voice?.length<1">null</div>
-    </li>
-    <template v-if="voice.main">
-      <div class="name">main</div>
+    <template v-if="Role.isvoice">
+      <div class="name">Voice</div>
       <li class="info-voice">
-        <div class="main">
-          <span v-for="(s,key) of voice.main" :class="{'back':Role.mian===key}" @click="Role.mian=key">{{key}}</span>
-        </div>
-        <div class="lists" v-for="p of voice.main[Role.mian]" @click="spine2d.play(p)" :title="p.name" :key="p.name">
-          {{p.name}}
-        </div>
+        <div v-for="p in voices.voice" @click="spine2d.play(p)" :title="p.name">{{ p.name }}</div>
+        <div v-if="voices.voice?.length<1">null</div>
       </li>
+      <template v-if="voices.main &&JSON.stringify(voices.main) !== '{}'">
+        <div class="name">main</div>
+        <li class="info-voice">
+          <div class="main">
+            <span v-for="(s,key) of voices.main" :class="{'back':Role.mian===key}" @click="Role.mian=key">{{key}}</span>
+          </div>
+          <div class="lists" v-for="p of voices?.main[Role?.mian]" @click="spine2d.play(p)" :title="p.name" :key="p.name">
+            {{p.name}}
+          </div>
+        </li>
+      </template>
     </template>
+    <div v-else class="loading">loading...</div>
     <template v-if="!spine2d.errors.value">
       <div class="name">animation</div>
       <li class="info-voice">
@@ -44,8 +47,12 @@
 import { spine2d } from '@/spine';
 import { role } from '@/store';
 import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 const Role = role();
+const route = useRoute();
 const { voice } = storeToRefs(Role);
+const voices = ref(voice.value.get(+route.params.id));
 </script>
 
 <style lang="scss" scoped>
@@ -83,6 +90,22 @@ const { voice } = storeToRefs(Role);
   }
 }
 
+.loading {
+  animation: anima 1s infinite alternate;
+
+}
+
+@keyframes anima {
+
+  0%,
+  20% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 1;
+  }
+}
 
 .name {
   border: 1px solid $ThemeC3;

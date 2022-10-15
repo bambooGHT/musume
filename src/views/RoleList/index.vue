@@ -19,8 +19,8 @@ onMounted(async () => {
   if (!Role.rolelist[id]) {
     const result = await roles(id);
     Role.rolelist[id] = result.data.role;
-    Role.rolelistde[id] = result.data.roles;
+    Role.rolelistde[id] = result.data.rolede;
   }
-  scroll();
 });
+scroll();
 </script>

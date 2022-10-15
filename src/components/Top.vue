@@ -13,9 +13,9 @@
     <div class="mask" v-show="clap" @click="click"></div>
     <nav class="nav" :class="{ 'nav1': clap }" @click.stop>
       <div @click="topath('/')">home</div>
-      <div @click="topath('/rolelist/musume',1)">rolelist</div>
-      <div @click="topath('/rolelist/BeastGod',1)">roles</div>
-      <div @click="topath('/rolelist/enemy',1)">rolelist1</div>
+      <div @click="topath('/musume',1)">rolelist</div>
+      <div @click="topath('/BeastGod',1)">roles</div>
+      <div @click="topath('/enemy',1)">rolelist1</div>
       <div @click="topath('/info')">key</div>
       <!-- <nav class="lang">
         <div>key</div>

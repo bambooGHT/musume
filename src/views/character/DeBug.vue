@@ -104,17 +104,15 @@ const scale = () => {
 };
 watch(() => spine2d.debugcg.drawDebug, (newvalue) => {
   if (!newvalue.drawDebug) {
-    for (let key in newvalue) {
-      key !== 'drawDebug' && (spine2d.spine[key] = false);
+    for (const key of Object.keys(newvalue).slice(1)) {
+      spine2d.spine[key] = false;
     }
     setTimeout(() => {
       spine2d.spine['drawDebug'] = false;
     }, 10);
     return;
   }
-  for (let key in newvalue) {
-    spine2d.spine[key] = newvalue[key];
-  }
+  Object.assign(spine2d.spine, newvalue);
 }, {
   deep: true,
 });
