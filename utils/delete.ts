@@ -26,28 +26,29 @@ import { readdir, stat, unlink, rmdir } from 'fs/promises';
 
 //删除文件
 const delele = async (path: string) => {
-  let list = await readdir(path);
-  // list.map(async (p) => {
-  //   const file = `${path}/${p}`;
-  //   const files = await stat(file);
-  //   if (files.isDirectory()) {
-  //     if (file.indexOf('general') !== -1 || file.indexOf('main') !== -1) return;
-  //     console.log(file);
-  //     await delele(file);
-  //   } else {
-  //     await unlink(file);
-  //   }
-  //   await rmdir(file).catch(() => { });
-  // });
-  list.map(async (item: string) => {
+  const list = await readdir(path);
+  await Promise.all(list.map(async (p: string) => {
+    const file = `${path}/${p}`;
+    const files = await stat(file);
+    if (file.includes('general') || file.includes('main')) return Promise.reject(path);
+    files.isDirectory() ? await delele(file) : await unlink(file);
+  })).then(async () => await rmdir(path)).catch((err) => {
+    console.log('包含 general 或 main 目录', err);
+  });
+  // .finally(async () => await rmdir(path));
+};
+// delele('data/voice');
+
+const delele1 = async (path: string) => {
+  const list = await readdir(path);
+  await Promise.all(list.map(async (item: string) => {
     const stats = await stat(`${path}/${item}`);
-    if (stats.isDirectory()) {
-      delele(`${path}/${item}`);
-    } else {
+    if (stats.isDirectory()) delele1(`${path}/${item}`);
+    else {
       //  /#/  /dat/  /_s/
       /#/.test(item) && await unlink(`${path}/${item}`);
       /dat/.test(item) && await unlink(`${path}/${item}`);
     }
-  });
+  }));
 };
-delele('./data/minmusume');
+// delele1('data/minrole')

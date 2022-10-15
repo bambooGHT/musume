@@ -18,21 +18,18 @@ app.all('*', (req, res, next) => {
 
 //圖片請求頭
 app.use(/^\/.*(\.png)$/, (req, res, next) => {
-  res.type('png')
+  res.type('png');
   next();
 });
 //音頻請求頭
 app.use(/^\/.*(\.wav)$/, (req, res, next) => {
-  res.type('wav')
+  res.type('wav');
   next();
 });
 //静态文件
 app.use(express.static(join(__dirname, 'data')));
 
 app.use(roles);
-
-
-
 
 
 app.listen(3002, () => {
