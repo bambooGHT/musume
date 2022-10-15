@@ -138,6 +138,6 @@ const voice = async (path: string) => {
     });
   };
   await Promise.all(list.map((p: string) => data(p)));
-  await writeFile('voice.json', JSON.stringify([...voicejson.entries()].sort((p, s) => p[0] - s[0])));
+  await writeFile('voice.json', JSON.stringify([...voicejson.entries()]));
 };
 voice('data/voice');

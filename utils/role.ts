@@ -219,8 +219,8 @@ const rolelist = async (path: string) => {
   };
   await Promise.all(newlist.map((p: string) => role1(p)));
 
-  await writeFile('roleinfo.json', JSON.stringify(roleinfo));
-  await writeFile('rolejson.json', JSON.stringify([...rolejson.entries()].sort((p, s) => p[0] - s[0])));
+  await writeFile('roleinfo.json', JSON.stringify(roleinfo.sort((p, s) => p.id - s.id)));
+  await writeFile('rolejson.json', JSON.stringify([...rolejson.entries()]));
   await writeFile('rolede.json', JSON.stringify(roledeinfo));
 
 };
