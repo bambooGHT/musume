@@ -27,7 +27,7 @@ app.use(/^\/.*(\.wav)$/, (req, res, next) => {
   next();
 });
 //静态文件
-app.use(express.static(join(__dirname, 'data')));
+app.use('/data', express.static(join(__dirname, 'data')));
 
 app.use(roles);
 
